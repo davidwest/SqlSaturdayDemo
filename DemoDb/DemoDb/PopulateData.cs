@@ -1,4 +1,6 @@
 ﻿using System;
+using DemoDb.Demos.Overview;
+using FluidDbClient;
 using FluidDbClient.Shell;
 using FluidDbClient.Sql;
 
@@ -6,25 +8,63 @@ namespace DemoDb
 {
     public static class PopulateData
     {
-        private const string Script =
-@"
-DELETE FROM KlugeRobot; 
-DELETE FROM ContraptionWidget; 
-DELETE FROM Contraption; 
-DELETE FROM Kluge;
-DELETE FROM Robot;
-DELETE FROM Widget;
-
-INSERT INTO Robot (Name, Description, DateBuilt, IsEvil) SELECT * FROM @Robots;
-INSERT INTO Widget (GlobalId, Name, Description) SELECT * FROM @Widgets;
-";
-
         public static void Start()
+        {
+            InitializeMain();
+            InitializeContactInfo();
+        }
+
+        private static void InitializeMain()
         {
             var robots = CreateRobotData();
             var widgets = CreateWidgetData();
-            
-            Db.Execute(Script, new { robots, widgets });
+
+            Db.Execute(MainScript, new { robots, widgets });
+        }
+
+        private static void InitializeContactInfo()
+        {
+            var items = new []
+            {
+                new ContactInfo
+                {
+                    Phone = new PhoneNumber { AreaCode = 225, Postfix = 395, Prefix = 3513},
+                    Address = new MailingAddress
+                    {
+                        StreetNumber = 123,
+                        StreetName = "Hello Ave.",
+                        Locale = new Locale{City = "Baton Rouge", State="LA", Zip=70810}
+                    }
+                },
+                new ContactInfo
+                {
+                    Phone = new PhoneNumber { AreaCode = 892, Postfix = 299, Prefix = 9876},
+                    Address = new MailingAddress
+                    {
+                        StreetNumber = 567,
+                        StreetName = "Fast Ln.",
+                        Locale = new Locale{City = "Chicago", State="IL", Zip=60611}
+                    }
+                }
+            };
+
+            var compiler = new DbScriptCompiler();
+            foreach (var item in items)
+            {
+                compiler.Append("INSERT INTO ContactInfo VALUES ({0},{1},{2},{3},{4},{5},{6},{7});", 
+                                item.Phone.AreaCode,
+                                item.Phone.Prefix,
+                                item.Phone.Postfix,
+                                item.Address.Locale.City,
+                                item.Address.Locale.State,
+                                item.Address.Locale.Zip,
+                                item.Address.StreetNumber,
+                                item.Address.StreetName);
+            }
+
+            var cmd = new ScriptDbCommand();
+            cmd.IncludeScriptDoc(compiler.Compile());
+            cmd.Execute();
         }
 
         private static StructuredData CreateRobotData()
@@ -109,5 +149,19 @@ INSERT INTO Widget (GlobalId, Name, Description) SELECT * FROM @Widgets;
 
             return data;
         }
+        
+        private const string MainScript =
+            @"
+DELETE FROM KlugeRobot; 
+DELETE FROM ContraptionWidget; 
+DELETE FROM Contraption; 
+DELETE FROM Kluge;
+DELETE FROM Robot;
+DELETE FROM Widget;
+DELETE FROM ContactInfo;
+
+INSERT INTO Robot (Name, Description, DateBuilt, IsEvil) SELECT * FROM @Robots;
+INSERT INTO Widget (GlobalId, Name, Description) SELECT * FROM @Widgets;
+";
     }
 }

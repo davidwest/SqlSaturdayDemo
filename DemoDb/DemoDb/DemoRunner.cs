@@ -1,5 +1,4 @@
-﻿using DemoDb.Demos;
-using DemoDb.Demos.App;
+﻿using DemoDb.Demos.App;
 using DemoDb.Demos.Overview;
 
 namespace DemoDb
@@ -9,13 +8,16 @@ namespace DemoDb
         public static void Start()
         {
             // --- OVERVIEW ---
-            
+
             DemoBasics.Start();
-            DemoMultiDbOperation.Start();
-            DemoToStructuredData.Start();
-            DemoToStructuredDataWithTypeName.Start();
-            DemoCombineStructuredDataAndMultiParam.Start();
-            
+            //DemoMapping.Start();
+            //DemoNestedMapping.Start();
+            //DemoMultiDbOperation.Start();
+
+            //DemoToStructuredData.Start();
+            //DemoToStructuredDataWithTypeName.Start();
+            //DemoCombineStructuredDataAndMultiParam.Start();
+
             // --- APP ---
 
             //UserCreatesNewKluges.Start();

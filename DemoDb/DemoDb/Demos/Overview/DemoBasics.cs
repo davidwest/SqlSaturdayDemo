@@ -14,6 +14,9 @@ namespace DemoDb.Demos.Overview
 
         public static void Start()
         {
+            Debug.WriteLine("\n--- Execute ---");
+            DemoExecute();
+
             Debug.WriteLine("\n--- Scalar ---");
             DemoGetScalar();
 
@@ -32,7 +35,7 @@ namespace DemoDb.Demos.Overview
 
         public static void DemoExecute()
         {
-            Db.Execute("UPDATE Widget WHERE Name = @");    
+            Db.Execute("UPDATE Widget SET Name=@newName WHERE Name = @oldName;", new {newName="Jello Magic", oldName="Jello Wizard"});
         }
 
         public static void DemoGetScalar()

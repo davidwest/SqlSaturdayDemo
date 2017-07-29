@@ -48,7 +48,7 @@ namespace DemoDb.Demos.Overview
             var widgets =
                 Db<AcmeDb>
                 .GetResultSet("SELECT * FROM Widget;")
-                .Select(r => r.Map<Widget>());
+                .Map<Widget>();
 
             var widgetSleeves =
                 widgets

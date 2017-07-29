@@ -73,12 +73,15 @@
     <Compile Include="Demos\App\Extensions.cs" />
     <Compile Include="Demos\App\UserCreatesNewKluges.cs" />
     <Compile Include="Demos\App\UserUpdatesKluge.cs" />
+    <Compile Include="Demos\Overview\DemoMapping.cs" />
+    <Compile Include="Demos\Overview\DemoNestedMapping.cs" />
     <Compile Include="Demos\Overview\DisplayExtensions.cs" />
     <Compile Include="Demos\Overview\DemoBasics.cs" />
     <Compile Include="Demos\Overview\DemoMultiDbOperation.cs" />
     <Compile Include="Demos\Overview\DemoCombineStructuredDataAndMultiParam.cs" />
     <Compile Include="Demos\Overview\DemoToStructuredData.cs" />
     <Compile Include="Demos\Overview\DemoToStructuredDataWithTypeName.cs" />
+    <Compile Include="Demos\Overview\Models.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Application\Kluge.cs" />
     <Compile Include="Application\WidgetSleeve.cs" />

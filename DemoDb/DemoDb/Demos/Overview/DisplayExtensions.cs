@@ -8,7 +8,12 @@ namespace DemoDb.Demos.Overview
     {
         public static string ToDisplayString(this Robot robot)
         {
-            return $"{robot.RobotId, -6} {robot.Name, -30} {robot.DateBuilt.ToString("d"), -15}    {robot.Description}";
+            return $"{robot.RobotId, -6}  Is evil: {robot.IsEvil, -8} {robot.Name, -30} {robot.DateBuilt.ToString("d"), -15}    {robot.Description}";
+        }
+
+        public static string ToDisplayString(this ImmutableRobot robot)
+        {
+            return $"{robot.RobotId,-6}   Is good: {robot.IsGood, -8} {robot.Name,-30} {robot.DateBuilt.ToString("d"),-15}    {robot.Description}";
         }
 
         public static string ToDisplayString(this Widget widget)
@@ -67,6 +72,16 @@ namespace DemoDb.Demos.Overview
                 }
             }
 
+            return builder.ToString();
+        }
+        
+        public static string ToDisplayString(this ContactInfo item)
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendLine($"{item.Address.StreetNumber} {item.Address.StreetName}");
+            builder.AppendLine($"{item.Address.Locale.City}, {item.Address.Locale.State} {item.Address.Locale.Zip}");
+            builder.AppendLine($"({item.Phone.AreaCode}) {item.Phone.Prefix}-{item.Phone.Postfix}");
             return builder.ToString();
         }
     }
